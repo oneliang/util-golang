@@ -2,7 +2,7 @@ package file
 
 import (
 	"fmt"
-	"golang.oneliang.com/util/base"
+	"github.com/oneliang/util-golang/base"
 )
 
 const (
