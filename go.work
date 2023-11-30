@@ -4,6 +4,5 @@ use (
 	file
 	base
 	test
-	md5
-	string
+	common
 )
