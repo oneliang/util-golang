@@ -2,15 +2,15 @@ package test
 
 import (
 	"fmt"
-	stringUtil "github.com/oneliang/util-golang/string"
+	common "github.com/oneliang/util-golang/common"
 	"testing"
 )
 
 func TestString(t *testing.T) {
-	fmt.Println(stringUtil.GenerateZeroString(11, 20))
+	fmt.Println(common.GenerateZeroString(11, 20))
 	blankString := "    "
 	emptyString := ""
-	fmt.Printf("is blank:%t\n", stringUtil.IsBlank(blankString))
-	fmt.Printf("is empty:%t\n", stringUtil.IsEmpty(emptyString))
+	fmt.Printf("is blank:%t\n", common.StringIsBlank(blankString))
+	fmt.Printf("is empty:%t\n", common.StringIsEmpty(emptyString))
 
 }
