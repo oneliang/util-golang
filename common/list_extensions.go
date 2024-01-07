@@ -17,3 +17,33 @@ func ListToMap[V interface{}, K interface{}](list []*V, keyTransform func(*V) *K
 	}
 	return resultMap
 }
+
+func ListToNewList[V interface{}, NV interface{}](list []*V, valueTransform func(*V) *NV) []*NV {
+	var newList []*NV
+	for _, item := range list {
+		newItem := valueTransform(item)
+		newList = append(newList, newItem)
+	}
+	return newList
+}
+
+func ListFilter[V interface{}](list []*V, filter func(*V) bool) []*V {
+	var newList []*V
+	for _, item := range list {
+		if filter(item) {
+			newList = append(newList, item)
+		}
+	}
+	return newList
+}
+
+func ListFilterToNewList[V interface{}, NV interface{}](list []*V, filter func(*V) bool, valueTransform func(*V) *NV) []*NV {
+	var newList []*NV
+	for _, item := range list {
+		if filter(item) {
+			newItem := valueTransform(item)
+			newList = append(newList, newItem)
+		}
+	}
+	return newList
+}
