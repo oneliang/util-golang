@@ -6,7 +6,7 @@ import (
 	"reflect"
 )
 
-type TreeNode[IdType interface{}, V interface{}] struct {
+type TreeNode[IdType int | int8 | int16 | int32 | int64 | uint | uint8 | uint16 | uint32 | uint64 | string, V interface{}] struct {
 	Id       IdType
 	ParentId IdType
 	Value    V
