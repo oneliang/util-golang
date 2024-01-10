@@ -9,6 +9,8 @@ type Data struct {
 	Id       string
 	ParentId string
 	Name     string
+	Children []*Data
+	Depth    int32
 }
 
 func TestTree(t *testing.T) {
@@ -38,6 +40,6 @@ func TestTree(t *testing.T) {
 		ParentId: "3",
 		Name:     "Name_1_1_2(6)",
 	})
-	rootTreeNodeList := common.ListToTreeList[string, Data](dataList, "Id", "ParentId", []string{""})
-	common.PrintTreeNodeList(rootTreeNodeList)
+	rootDataList := common.ListToTreeList[string, Data](dataList, "Id", "ParentId", []string{""}, "Children", "Depth")
+	common.PrintTreeList(rootDataList)
 }
