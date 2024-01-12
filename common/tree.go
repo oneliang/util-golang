@@ -18,7 +18,7 @@ func ListToTreeList[IdType int | int8 | int16 | int32 | int64 | uint | uint8 | u
 	var dataMap = make(map[IdType]*Item)
 	for _, data := range dataList {
 		dataElem := reflect.ValueOf(data).Elem()
-		fmt.Println(data)
+
 		idField := dataElem.FieldByName(idFieldName)
 		idValue := idField.Interface().(IdType)
 
