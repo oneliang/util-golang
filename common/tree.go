@@ -33,13 +33,11 @@ func ListToTreeList[IdType int | int8 | int16 | int32 | int64 | uint | uint8 | u
 			}
 			rootDataList = append(rootDataList, data)
 		}
-		fmt.Println(data)
 		dataMap[idValue] = data
 	}
 
 	//generate the tree
 	for _, data := range dataList {
-		fmt.Println(data)
 		dataElem := reflect.ValueOf(data).Elem()
 
 		parentIdField := dataElem.FieldByName(parentIdFieldName)
