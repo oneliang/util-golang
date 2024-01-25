@@ -6,7 +6,7 @@ import (
 	"reflect"
 )
 
-func ListToTreeList[IdType SimpleTypeAndStruct, Item interface{}](
+func ListToTreeList[IdType comparable, Item interface{}](
 	dataList []Item,
 	idFieldName string,
 	parentIdFieldName string,
@@ -45,8 +45,8 @@ func ListToTreeList[IdType SimpleTypeAndStruct, Item interface{}](
 
 		depthField := dataElem.FieldByName(depthFieldName)
 
-		parentData := dataMap[parentIdValue]
-		if parentData != nil {
+		parentData, ok := dataMap[parentIdValue]
+		if ok {
 			parentDataElem := reflect.ValueOf(parentData).Elem()
 
 			parentChildrenField := parentDataElem.FieldByName(childrenFieldName)
@@ -61,6 +61,8 @@ func ListToTreeList[IdType SimpleTypeAndStruct, Item interface{}](
 			parentChildrenValue = append(parentChildrenValue, data)
 
 			parentChildrenField.Set(reflect.ValueOf(parentChildrenValue))
+		} else {
+			// key not exists
 		}
 	}
 
