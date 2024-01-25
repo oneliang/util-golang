@@ -40,6 +40,6 @@ func TestTree(t *testing.T) {
 		ParentId: "3",
 		Name:     "Name_1_1_2(6)",
 	})
-	rootDataList := common.ListToTreeList[string, Data](dataList, "Id", "ParentId", []string{""}, "Children", "Depth")
+	rootDataList := common.ListToTreeList[string, *Data](dataList, "Id", "ParentId", []string{""}, "Children", "Depth")
 	common.PrintTreeList(rootDataList)
 }

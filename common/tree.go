@@ -6,16 +6,16 @@ import (
 	"reflect"
 )
 
-func ListToTreeList[IdType int | int8 | int16 | int32 | int64 | uint | uint8 | uint16 | uint32 | uint64 | float32 | float64 | string, Item interface{}](
-	dataList []*Item,
+func ListToTreeList[IdType SimpleTypeAndStruct, Item interface{}](
+	dataList []Item,
 	idFieldName string,
 	parentIdFieldName string,
 	parentIdValueList []IdType,
 	childrenFieldName string,
 	depthFieldName string,
-) []*Item {
-	var rootDataList []*Item
-	var dataMap = make(map[IdType]*Item)
+) []Item {
+	var rootDataList []Item
+	var dataMap = make(map[IdType]Item)
 	for _, data := range dataList {
 		dataElem := reflect.ValueOf(data).Elem()
 
@@ -27,7 +27,7 @@ func ListToTreeList[IdType int | int8 | int16 | int32 | int64 | uint | uint8 | u
 
 		depthField := dataElem.FieldByName(depthFieldName)
 
-		if SimpleObjectInList(parentIdValue, parentIdValueList) {
+		if ObjectInList(parentIdValue, parentIdValueList) {
 			if depthField.IsValid() {
 				depthField.SetInt(1)
 			}
@@ -50,7 +50,7 @@ func ListToTreeList[IdType int | int8 | int16 | int32 | int64 | uint | uint8 | u
 			parentDataElem := reflect.ValueOf(parentData).Elem()
 
 			parentChildrenField := parentDataElem.FieldByName(childrenFieldName)
-			parentChildrenValue := parentChildrenField.Interface().([]*Item)
+			parentChildrenValue := parentChildrenField.Interface().([]Item)
 
 			parentDepthField := parentDataElem.FieldByName(depthFieldName)
 			if parentDepthField.IsValid() && depthField.IsValid() {
@@ -67,7 +67,7 @@ func ListToTreeList[IdType int | int8 | int16 | int32 | int64 | uint | uint8 | u
 	return rootDataList
 }
 
-func PrintTreeList[V interface{}](rootDataList []*V) {
+func PrintTreeList[V interface{}](rootDataList []V) {
 	jsonString, _ := json.Marshal(rootDataList)
 	fmt.Printf("json:%v\n", string(jsonString))
 }
