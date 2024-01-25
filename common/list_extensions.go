@@ -1,14 +1,5 @@
 package common
 
-func ListToMapSimpleKey[V interface{}, K SimpleType](list []V, keyTransform func(index int, item V) K) map[K]V {
-	resultMap := make(map[K]V)
-	for index, item := range list {
-		key := keyTransform(index, item)
-		resultMap[key] = item
-	}
-	return resultMap
-}
-
 func ListToMap[V interface{}, K SimpleTypeAndStruct](list []V, keyTransform func(index int, item V) K) map[K]V {
 	resultMap := make(map[K]V)
 	for index, item := range list {
