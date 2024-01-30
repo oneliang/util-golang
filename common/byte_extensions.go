@@ -9,7 +9,7 @@ type ByteArrayWrapper struct {
 	byteArray []byte
 }
 
-// NewByteArrayWrapper
+// NewByteArrayWrapper for new bytearray wrapper
 func NewByteArrayWrapper(size uint) *ByteArrayWrapper {
 	var byteArrayWrapper = &ByteArrayWrapper{
 		Size:      size,
@@ -33,6 +33,9 @@ func (this *ByteArrayWrapper) Write(offset uint, byteArray []byte) error {
 	if end > this.Size {
 		return errors.New("offset+size is large than Size")
 	}
-	copy(this.byteArray[offset:end], byteArray)
+	for i := 0; i < int(end-offset); i++ {
+		this.byteArray[int(offset)+i] = byteArray[i]
+	}
+	//copy(this.byteArray[offset:end], byteArray)
 	return nil
 }
