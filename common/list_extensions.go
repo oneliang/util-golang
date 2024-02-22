@@ -9,6 +9,15 @@ func ListToMap[V interface{}, K comparable](list []V, keyTransform func(index in
 	return resultMap
 }
 
+func ListToNewMap[V interface{}, K comparable, NV interface{}](list []V, transform func(index int, item V) (K, NV)) map[K]NV {
+	resultMap := make(map[K]NV)
+	for index, item := range list {
+		key, value := transform(index, item)
+		resultMap[key] = value
+	}
+	return resultMap
+}
+
 func ListToNewList[V interface{}, NV interface{}](list []V, valueTransform func(index int, item V) NV) []NV {
 	var newList []NV
 	for index, item := range list {
