@@ -61,3 +61,19 @@ func ListSumOf[V interface{}, R NumberType](list []V, selector func(index int, i
 	}
 	return sumResult
 }
+
+func ListGroupBy[V interface{}, K comparable](list []V, keySelector func(index int, item V) K) map[K][]V {
+	var groupByMap = make(map[K][]V)
+	for index, item := range list {
+		key := keySelector(index, item)
+		existItemList, exist := groupByMap[key]
+		if exist {
+			existItemList = append(existItemList, item)
+			groupByMap[key] = existItemList
+		} else { //not exist
+			var itemList []V
+			groupByMap[key] = itemList
+		}
+	}
+	return groupByMap
+}
