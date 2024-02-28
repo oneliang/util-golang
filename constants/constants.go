@@ -4,6 +4,9 @@ const (
 	// STRING_BLANK  blank string
 	STRING_BLANK = ""
 
+	// STRING_SPACE  space string
+	STRING_SPACE = " "
+
 	// SYMBOL_DOT symbol dot
 	SYMBOL_DOT = "."
 
