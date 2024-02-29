@@ -18,12 +18,12 @@ type Proxy struct {
 	invocationHandler InvocationHandler
 }
 
-// NewProxy
+// NewProxy .
 func NewProxy(instance interface{}, invocationHandler InvocationHandler) *Proxy {
 	typ := reflect.TypeOf(instance)
 	value := reflect.ValueOf(instance)
 	methods := make(map[string]*Method)
-	//将目标类的方法逐个装载
+
 	for i := 0; i < value.NumMethod(); i++ {
 		method := value.Method(i)
 		methods[typ.Method(i).Name] = &Method{value: method}
