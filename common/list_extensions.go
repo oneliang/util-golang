@@ -76,13 +76,12 @@ func ListGroupBy[V interface{}, K comparable](list []V, keySelector func(index i
 	for index, item := range list {
 		key := keySelector(index, item)
 		existItemList, exist := groupByMap[key]
-		if exist {
-			existItemList = append(existItemList, item)
-			groupByMap[key] = existItemList
-		} else { //not exist
-			var itemList []V
-			groupByMap[key] = itemList
+		if !exist {
+			//value not exist in map
+			existItemList = []V{}
 		}
+		existItemList = append(existItemList, item)
+		groupByMap[key] = existItemList
 	}
 	return groupByMap
 }
