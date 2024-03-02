@@ -1,6 +1,8 @@
 package common
 
 import (
+	"errors"
+	"fmt"
 	"github.com/oneliang/util-golang/constants"
 	"reflect"
 )
@@ -24,4 +26,11 @@ func JoinToString[V interface{}](list []V, transform func(index int, item V) str
 		}
 	}
 	return results
+}
+
+func CheckNotNil(object interface{}) error {
+	if object == nil {
+		return errors.New(fmt.Sprintf("object %+v is nil", object))
+	}
+	return nil
 }
