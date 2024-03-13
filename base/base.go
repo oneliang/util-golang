@@ -1,15 +1,5 @@
 package base
 
-import "fmt"
-
-const (
-	Name = "base"
-)
-
-func PrintName() {
-	fmt.Println("base/base.go")
-}
-
 type Also[T interface{}] interface {
 	Also(func(*T)) *T
 }

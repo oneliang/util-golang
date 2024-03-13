@@ -6,4 +6,8 @@ use (
 	test
 	common
 	atomic
+	resource
+	concurrent
+	state
+	logging
 )
