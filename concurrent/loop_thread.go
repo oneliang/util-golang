@@ -3,6 +3,8 @@ package concurrent
 import (
 	"errors"
 	"fmt"
+	"github.com/oneliang/util-golang/constants"
+	"github.com/oneliang/util-golang/logging"
 	"sync"
 )
 
@@ -12,24 +14,28 @@ const (
 	state_stop     int8 = 2
 )
 
+type Runnable func()
+
 type LoopThread struct {
 	operationLock sync.Mutex
 	runnable      Runnable
 	state         int8
 	stopChannel   chan bool
+	logger        logging.Logger
 }
-type Runnable func()
 
 func NewLoopThread(runnable Runnable) *LoopThread {
 	return &LoopThread{
 		runnable:    runnable,
 		state:       state_inactive,
 		stopChannel: make(chan bool, 1),
+		logger:      logging.LoggerManager.GetLoggerByPattern("LoopThread"),
 	}
 }
 
 func (this *LoopThread) Start() error {
 	if err := this.checkStopped(); err != nil {
+		this.logger.Error(constants.STRING_ERROR, err)
 		return err
 	}
 	defer this.operationLock.Unlock()
@@ -38,7 +44,9 @@ func (this *LoopThread) Start() error {
 		this.state = state_start
 		go this.loopRun(this.stopChannel)
 	} else {
-		return errors.New(fmt.Sprintf("[%v] is running", this))
+		err := errors.New(fmt.Sprintf("[%+v] is running", this))
+		this.logger.Error(constants.STRING_ERROR, err)
+		return err
 	}
 	return nil
 }
@@ -76,7 +84,9 @@ func (this *LoopThread) Stop() error {
 
 func (this *LoopThread) checkStopped() error {
 	if this.state == state_stop {
-		return errors.New(fmt.Sprintf("[%v] is stopped", this))
+		err := errors.New(fmt.Sprintf("[%v] is stopped", this))
+		this.logger.Error(constants.STRING_ERROR, err)
+		return err
 	}
 	return nil
 }

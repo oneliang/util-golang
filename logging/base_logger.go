@@ -25,7 +25,7 @@ func GenerateLogString(levelName string, printGoroutineId bool, message string, 
 	}
 	if printGoroutineId {
 		goroutineId := common.GetGoroutineId()
-		return fmt.Sprintf("[GOID:%d][%s][%s]%s", goroutineId, levelName, fmt.Sprintf(message, args...), errorString)
+		return fmt.Sprintf("[GO_ID:%d][%s][%s]%s", goroutineId, levelName, fmt.Sprintf(message, args...), errorString)
 	} else {
 		return fmt.Sprintf("[%s][%s]%s", levelName, fmt.Sprintf(message, args...), errorString)
 	}
