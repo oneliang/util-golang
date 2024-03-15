@@ -1,5 +1,10 @@
 package logging
 
+import (
+	"fmt"
+	"github.com/oneliang/util-golang/common"
+)
+
 type LogFunction func(levelName string, message string, err error, args ...any)
 type AbstractLogger struct {
 	Level       *level
@@ -38,8 +43,8 @@ func (this *AbstractLogger) Fatal(message string, args ...any) {
 
 // LogByLevel .
 func (this *AbstractLogger) logByLevel(level *level, message string, err error, args ...any) {
-	if level.Ordinal >= this.Level.Ordinal {
-		this.log(level.Name, message, err, args...)
+	if level.ordinal >= this.Level.ordinal {
+		this.log(level.name, message, err, args...)
 	}
 }
 
@@ -50,4 +55,17 @@ func (this *AbstractLogger) log(levelName string, message string, err error, arg
 
 // Destroy .
 func (this *AbstractLogger) Destroy() {
+}
+
+func GenerateLogString(levelName string, printGoroutineId bool, message string, err error, args ...any) string {
+	var errorString = ""
+	if err != nil {
+		errorString = "\n" + fmt.Sprintf("%+v", common.WithStack(err))
+	}
+	if printGoroutineId {
+		goroutineId := common.GetGoroutineId()
+		return fmt.Sprintf("[GO_ID:%d][%s][%s]%s", goroutineId, levelName, fmt.Sprintf(message, args...), errorString)
+	} else {
+		return fmt.Sprintf("[%s][%s]%s", levelName, fmt.Sprintf(message, args...), errorString)
+	}
 }

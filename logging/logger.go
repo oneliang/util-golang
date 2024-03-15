@@ -25,12 +25,12 @@ type Logger interface {
 }
 
 var Level = levelEnum{
-	VERBOSE: &level{Ordinal: 0, Name: "VERBOSE"},
-	DEBUG:   &level{Ordinal: 1, Name: "DEBUG"},
-	INFO:    &level{Ordinal: 2, Name: "INFO"},
-	WARNING: &level{Ordinal: 3, Name: "WARNING"},
-	ERROR:   &level{Ordinal: 4, Name: "ERROR"},
-	FATAL:   &level{Ordinal: 5, Name: "FATAL"},
+	VERBOSE: &level{ordinal: 0, name: "VERBOSE"},
+	DEBUG:   &level{ordinal: 1, name: "DEBUG"},
+	INFO:    &level{ordinal: 2, name: "INFO"},
+	WARNING: &level{ordinal: 3, name: "WARNING"},
+	ERROR:   &level{ordinal: 4, name: "ERROR"},
+	FATAL:   &level{ordinal: 5, name: "FATAL"},
 }
 
 type levelEnum struct {
@@ -43,6 +43,6 @@ type levelEnum struct {
 }
 
 type level struct {
-	Ordinal int
-	Name    string
+	ordinal int
+	name    string
 }
