@@ -2,7 +2,10 @@ package logging
 
 import (
 	"fmt"
+	"github.com/oneliang/util-golang/base"
 	"github.com/oneliang/util-golang/common"
+	"github.com/oneliang/util-golang/constants"
+	"time"
 )
 
 type LogFunction func(levelName string, message string, err error, args ...any)
@@ -57,15 +60,16 @@ func (this *AbstractLogger) log(levelName string, message string, err error, arg
 func (this *AbstractLogger) Destroy() {
 }
 
-func GenerateLogString(levelName string, printGoroutineId bool, message string, err error, args ...any) string {
+func GenerateLogContent(levelName string, printGoroutineId bool, message string, err error, args ...any) string {
 	var errorString = ""
 	if err != nil {
-		errorString = "\n" + fmt.Sprintf("%+v", common.WithStack(err))
+		errorString = "\n" + fmt.Sprintf("%+v", base.WithStack(err))
 	}
+	timeString := time.Now().Format(constants.TIME_LAYOUT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND_MILLISECOND)
 	if printGoroutineId {
 		goroutineId := common.GetGoroutineId()
-		return fmt.Sprintf("[GO_ID:%d][%s][%s]%s", goroutineId, levelName, fmt.Sprintf(message, args...), errorString)
+		return fmt.Sprintf("[%s][%s][GO_ID:%d][%s]%s", timeString, levelName, goroutineId, fmt.Sprintf(message, args...), errorString)
 	} else {
-		return fmt.Sprintf("[%s][%s]%s", levelName, fmt.Sprintf(message, args...), errorString)
+		return fmt.Sprintf("[%s][%s][%s]%s", timeString, levelName, fmt.Sprintf(message, args...), errorString)
 	}
 }

@@ -30,4 +30,23 @@ const (
 	TIME_UNION_YEAR_MONTH_DAY_HOUR                           = "yyyyMMddHH"
 	TIME_UNION_YEAR_MONTH_DAY                                = "yyyyMMdd"
 	TIME_UNION_YEAR_MONTH                                    = "yyyyMM"
+
+	TIME_LAYOUT_YEAR                                          = "2006"                    // year
+	TIME_LAYOUT_SIMPLE_YEAR                                   = "06"                      // suffix year
+	TIME_LAYOUT_MONTH                                         = "01"                      // month
+	TIME_LAYOUT_DAY                                           = "02"                      //day
+	TIME_LAYOUT_HOUR                                          = "15"                      //hour
+	TIME_LAYOUT_MINUTE                                        = "04"                      //minute
+	TIME_LAYOUT_SECOND                                        = "05"                      //second
+	TIME_LAYOUT_YEAR_MONTH                                    = "2006-01"                 // year month
+	TIME_LAYOUT_YEAR_MONTH_DAY                                = "2006-01-02"              // year-month-day
+	TIME_LAYOUT_YEAR_MONTH_DAY_CN                             = "2006年1月2日"               // year-month-day
+	TIME_LAYOUT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND             = "2006-01-02 15:04:05"     //always used for database
+	TIME_LAYOUT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND_MILLISECOND = "2006-01-02 15:04:05.999" //always used for log
+	TIME_LAYOUT_HOUR_MINUTE_SECOND                            = "15:04:05"                //hour:minute:second
+	TIME_LAYOUT_UNION_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND       = "20060102150405"
+	TIME_LAYOUT_UNION_YEAR_MONTH_DAY_HOUR_MINUTE              = "200601021504"
+	TIME_LAYOUT_UNION_YEAR_MONTH_DAY_HOUR                     = "2006010215"
+	TIME_LAYOUT_UNION_YEAR_MONTH_DAY                          = "20060102"
+	TIME_LAYOUT_UNION_YEAR_MONTH                              = "200601"
 )

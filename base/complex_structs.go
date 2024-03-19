@@ -1,4 +1,4 @@
-package common
+package base
 
 type Pair[F interface{}, S interface{}] struct {
 	First  F

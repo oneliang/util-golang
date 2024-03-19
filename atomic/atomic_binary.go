@@ -33,7 +33,7 @@ type AtomicBinary[DATA interface{}] struct {
 	// private variable
 	binaryDataLength     uint
 	byteArrayWrapperList []*common.ByteArrayWrapper
-	autoExpandLock       sync.Mutex
+	autoExpandLock       *sync.Mutex
 }
 
 func NewAtomicBinaryDefault[DATA interface{}](

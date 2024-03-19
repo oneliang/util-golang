@@ -1,5 +1,7 @@
 package common
 
+import "github.com/oneliang/util-golang/base"
+
 func ListToMap[V interface{}, K comparable](list []V, keyTransform func(index int, item V) K) map[K]V {
 	resultMap := make(map[K]V)
 	for index, item := range list {
@@ -48,7 +50,7 @@ func ListFilterToNewList[V interface{}, NV interface{}](list []V, filter func(in
 	return newList
 }
 
-func ListMinOf[V interface{}, R NumberType](list []V, selector func(index int, item V) R) R {
+func ListMinOf[V interface{}, R base.NumberType](list []V, selector func(index int, item V) R) R {
 	var minResult R
 	for index, item := range list {
 		value := selector(index, item)
@@ -63,7 +65,7 @@ func ListMinOf[V interface{}, R NumberType](list []V, selector func(index int, i
 	return minResult
 }
 
-func ListSumOf[V interface{}, R NumberType](list []V, selector func(index int, item V) R) R {
+func ListSumOf[V interface{}, R base.NumberType](list []V, selector func(index int, item V) R) R {
 	var sumResult R = 0
 	for index, item := range list {
 		sumResult += selector(index, item)

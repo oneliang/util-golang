@@ -1,4 +1,4 @@
-package common
+package base
 
 type UnsignedIntType = interface {
 	uint | uint8 | uint16 | uint32 | uint64

@@ -64,16 +64,17 @@ var (
 )
 
 func NewResourcePool[T interface{}](name string, resourceSource ResourceSource[T], resourcePoolConfig *ResourcePoolConfig) *ResourcePool[T] {
-	if resourcePoolConfig == nil {
-		resourcePoolConfig = defaultResourceConfig
+	var config = resourcePoolConfig
+	if config == nil {
+		config = defaultResourceConfig
 	}
 	return &ResourcePool[T]{
 		Name:                    name,
-		minResourceSize:         resourcePoolConfig.MinResourceSize,
-		maxResourceSize:         resourcePoolConfig.MaxResourceSize,
-		maxStableResourceSize:   resourcePoolConfig.MaxStableResourceSize,
-		resourceAliveTime:       resourcePoolConfig.ResourceAliveTime,
-		threadSleepTime:         resourcePoolConfig.ThreadSleepTime,
+		minResourceSize:         config.MinResourceSize,
+		maxResourceSize:         config.MaxResourceSize,
+		maxStableResourceSize:   config.MaxStableResourceSize,
+		resourceAliveTime:       config.ResourceAliveTime,
+		threadSleepTime:         config.ThreadSleepTime,
 		resourceSource:          resourceSource,
 		hasBeenInitialized:      false,
 		stableResourceStatusMap: make(map[int]*stableResourceStatus[T]),

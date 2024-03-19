@@ -10,4 +10,5 @@ use (
 	concurrent
 	state
 	logging
+	yaml
 )

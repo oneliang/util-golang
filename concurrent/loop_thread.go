@@ -17,7 +17,7 @@ const (
 type Runnable func()
 
 type LoopThread struct {
-	operationLock sync.Mutex
+	operationLock *sync.Mutex
 	runnable      Runnable
 	state         int8
 	stopChannel   chan bool

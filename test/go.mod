@@ -10,4 +10,5 @@ replace (
 	"github.com/oneliang/util-golang/state" v0.0.0 => ./../state
 	"github.com/oneliang/util-golang/resource" v0.0.0 => ./../resource
 	"github.com/oneliang/util-golang/logger" v0.0.0 => ./../logging
+	"github.com/oneliang/util-golang/file" v0.0.0 => ./../file
 )
