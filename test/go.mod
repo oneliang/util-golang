@@ -9,6 +9,6 @@ replace (
 	"github.com/oneliang/util-golang/concurrent" v0.0.0 => ./../concurrent
 	"github.com/oneliang/util-golang/state" v0.0.0 => ./../state
 	"github.com/oneliang/util-golang/resource" v0.0.0 => ./../resource
-	"github.com/oneliang/util-golang/logger" v0.0.0 => ./../logging
+	"github.com/oneliang/util-golang/logging" v0.0.0 => ./../logging
 	"github.com/oneliang/util-golang/file" v0.0.0 => ./../file
 )

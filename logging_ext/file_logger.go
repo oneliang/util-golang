@@ -1,4 +1,4 @@
-package logging
+package loggingExt
 
 import (
 	"bufio"
@@ -6,6 +6,7 @@ import (
 	"github.com/oneliang/util-golang/common"
 	"github.com/oneliang/util-golang/constants"
 	"github.com/oneliang/util-golang/file"
+	"github.com/oneliang/util-golang/logging"
 	"io/fs"
 	"os"
 	"path/filepath"
@@ -56,7 +57,7 @@ func initRule() *ruleEnum {
 }
 
 type FileLogger struct {
-	*AbstractLogger
+	*logging.AbstractLogger
 	directoryAbsolutePath string
 	filename              string
 	rule                  *rule
@@ -72,7 +73,7 @@ type FileLoggerConfig struct {
 	RemainDays uint
 }
 
-func NewFileLogger(level *level, directory string, filename string, fileLoggerConfig *FileLoggerConfig) *FileLogger {
+func NewFileLogger(level *logging.Level, directory string, filename string, fileLoggerConfig *FileLoggerConfig) *FileLogger {
 	var config = fileLoggerConfig
 	if config == nil {
 		config = defaultFileLoggerConfig
@@ -84,10 +85,10 @@ func NewFileLogger(level *level, directory string, filename string, fileLoggerCo
 		rule:                  config.Rule,
 		retainDays:            config.RemainDays,
 	}
-	fileLogger.AbstractLogger = &AbstractLogger{
+	fileLogger.AbstractLogger = &logging.AbstractLogger{
 		Level: level,
-		LogFunction: func(levelName string, message string, err error, args ...any) {
-			_ = fileLogger.log(levelName, true, message, err, args...)
+		LogFunction: func(levelName string, message string, err error) {
+			_ = fileLogger.log(levelName, message, err)
 		},
 	}
 	fileLogger.init()
@@ -124,8 +125,8 @@ func (this *FileLogger) newFile(directoryAbsolutePath string, currentBeginTime i
 	return fullFilename, nil
 }
 
-func (this *FileLogger) log(levelName string, printGoroutineId bool, message string, err error, args ...any) error {
-	logContent := GenerateLogContent(levelName, printGoroutineId, message, err, args...) + constants.STRING_CRLF
+func (this *FileLogger) log(levelName string, message string, err error) error {
+	logContent := message + constants.STRING_CRLF
 	currentTime := time.Now().UnixMilli()
 	timeInterval := currentTime - this.currentBeginTime
 	if timeInterval >= this.rule.interval {

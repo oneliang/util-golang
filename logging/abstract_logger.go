@@ -8,44 +8,44 @@ import (
 	"time"
 )
 
-type LogFunction func(levelName string, message string, err error, args ...any)
+type LogFunction func(levelName string, message string, err error)
 type AbstractLogger struct {
-	Level       *level
+	Level       *Level
 	LogFunction LogFunction
 }
 
 // Verbose .
 func (this *AbstractLogger) Verbose(message string, args ...any) {
-	this.logByLevel(Level.VERBOSE, message, nil, args...)
+	this.logByLevel(LevelConstants.VERBOSE, message, nil, args...)
 }
 
 // Debug .
 func (this *AbstractLogger) Debug(message string, args ...any) {
-	this.logByLevel(Level.DEBUG, message, nil, args...)
+	this.logByLevel(LevelConstants.DEBUG, message, nil, args...)
 }
 
 // Info .
 func (this *AbstractLogger) Info(message string, args ...any) {
-	this.logByLevel(Level.INFO, message, nil, args...)
+	this.logByLevel(LevelConstants.INFO, message, nil, args...)
 }
 
 // Warning .
 func (this *AbstractLogger) Warning(message string, args ...any) {
-	this.logByLevel(Level.WARNING, message, nil, args...)
+	this.logByLevel(LevelConstants.WARNING, message, nil, args...)
 }
 
 // Error .
 func (this *AbstractLogger) Error(message string, err error, args ...any) {
-	this.logByLevel(Level.ERROR, message, err, args...)
+	this.logByLevel(LevelConstants.ERROR, message, err, args...)
 }
 
 // Fatal .
 func (this *AbstractLogger) Fatal(message string, args ...any) {
-	this.logByLevel(Level.FATAL, message, nil, args...)
+	this.logByLevel(LevelConstants.FATAL, message, nil, args...)
 }
 
 // LogByLevel .
-func (this *AbstractLogger) logByLevel(level *level, message string, err error, args ...any) {
+func (this *AbstractLogger) logByLevel(level *Level, message string, err error, args ...any) {
 	if level.ordinal >= this.Level.ordinal {
 		this.log(level.name, message, err, args...)
 	}
@@ -53,7 +53,8 @@ func (this *AbstractLogger) logByLevel(level *level, message string, err error, 
 
 // Log .
 func (this *AbstractLogger) log(levelName string, message string, err error, args ...any) {
-	this.LogFunction(levelName, message, err, args...)
+	logContent := GenerateLogContent(levelName, true, message, err, args)
+	this.LogFunction(levelName, logContent, err)
 }
 
 // Destroy .

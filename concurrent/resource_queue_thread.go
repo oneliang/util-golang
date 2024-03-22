@@ -1,23 +1,23 @@
 package concurrent
 
 import (
-	"fmt"
 	"github.com/oneliang/util-golang/constants"
-	"github.com/oneliang/util-golang/logging"
 )
 
 type ResourceQueueThread[T interface{}] struct {
-	loopThread      *LoopThread
-	needToStop      bool
-	resourceChannel chan T
-	logger          logging.Logger
+	loopThread        *LoopThread
+	needToStop        bool
+	resourceChannel   chan T
+	resourceProcessor func(resource T)
+	logger            logging.Logger
 }
 
-func NewResourceQueueThread[T interface{}]() *ResourceQueueThread[T] {
+func NewResourceQueueThread[T interface{}](resourceProcessor func(resource T)) *ResourceQueueThread[T] {
 	resourceQueueThread := &ResourceQueueThread[T]{
-		needToStop:      false,
-		resourceChannel: make(chan T),
-		logger:          logging.LoggerManager.GetLoggerByPattern("ResourceQueueThread"),
+		needToStop:        false,
+		resourceChannel:   make(chan T),
+		resourceProcessor: resourceProcessor,
+		logger:            logging.LoggerManager.GetLoggerByPattern("ResourceQueueThread"),
 	}
 
 	resourceQueueThread.loopThread = NewLoopThread(func() {
@@ -36,7 +36,7 @@ func (this *ResourceQueueThread[T]) Start() {
 func (this *ResourceQueueThread[T]) run() {
 	select {
 	case resource := <-this.resourceChannel:
-		fmt.Println(fmt.Sprintf("%+v", resource))
+		this.resourceProcessor(resource)
 	default:
 		if this.needToStop {
 			this.realStop()

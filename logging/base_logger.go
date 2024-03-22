@@ -9,15 +9,15 @@ type BaseLogger struct {
 }
 
 // NewBaseLogger .
-func NewBaseLogger(level *level) *BaseLogger {
+func NewBaseLogger(level *Level) *BaseLogger {
 	return &BaseLogger{&AbstractLogger{
 		Level: level,
-		LogFunction: func(levelName string, message string, err error, args ...any) {
-			fmt.Println(GenerateLogContent(levelName, true, message, err, args...))
+		LogFunction: func(levelName string, message string, err error) {
+			fmt.Println(message)
 		},
 	}}
 }
 
 var (
-	DEFAULT_LOGGER = NewBaseLogger(Level.VERBOSE)
+	DEFAULT_LOGGER = NewBaseLogger(LevelConstants.VERBOSE)
 )

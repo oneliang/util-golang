@@ -1,6 +1,7 @@
 package test
 
 import (
+	"fmt"
 	"github.com/oneliang/util-golang/concurrent"
 	"testing"
 	"time"
@@ -8,7 +9,9 @@ import (
 
 func TestResourceQueueThread(t *testing.T) {
 
-	resourceQueueThread := concurrent.NewResourceQueueThread[any]()
+	resourceQueueThread := concurrent.NewResourceQueueThread[any](func(resource any) {
+		fmt.Println(fmt.Sprintf("%+v", resource))
+	})
 	resourceQueueThread.Start()
 	resourceQueueThread.AddResource(1)
 	time.Sleep(2 * time.Second)

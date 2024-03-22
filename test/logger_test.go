@@ -10,6 +10,6 @@ func TestLogger(t *testing.T) {
 	logger := logging.LoggerManager.GetLoggerByPattern("aaa")
 	logger.Verbose(":%s", "aaa")
 
-	baseLogger := logging.NewBaseLogger(logging.Level.DEBUG)
+	baseLogger := logging.NewBaseLogger(logging.LevelConstants.DEBUG)
 	baseLogger.Info("%s", "a")
 }

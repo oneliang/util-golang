@@ -24,25 +24,25 @@ type Logger interface {
 	Destroy()
 }
 
-var Level = levelEnum{
-	VERBOSE: &level{ordinal: 0, name: "VERBOSE"},
-	DEBUG:   &level{ordinal: 1, name: "DEBUG"},
-	INFO:    &level{ordinal: 2, name: "INFO"},
-	WARNING: &level{ordinal: 3, name: "WARNING"},
-	ERROR:   &level{ordinal: 4, name: "ERROR"},
-	FATAL:   &level{ordinal: 5, name: "FATAL"},
+var LevelConstants = levelEnum{
+	VERBOSE: &Level{ordinal: 0, name: "VERBOSE"},
+	DEBUG:   &Level{ordinal: 1, name: "DEBUG"},
+	INFO:    &Level{ordinal: 2, name: "INFO"},
+	WARNING: &Level{ordinal: 3, name: "WARNING"},
+	ERROR:   &Level{ordinal: 4, name: "ERROR"},
+	FATAL:   &Level{ordinal: 5, name: "FATAL"},
 }
 
 type levelEnum struct {
-	VERBOSE *level
-	DEBUG   *level
-	INFO    *level
-	WARNING *level
-	ERROR   *level
-	FATAL   *level
+	VERBOSE *Level
+	DEBUG   *Level
+	INFO    *Level
+	WARNING *Level
+	ERROR   *Level
+	FATAL   *Level
 }
 
-type level struct {
+type Level struct {
 	ordinal int
 	name    string
 }

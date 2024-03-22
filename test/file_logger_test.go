@@ -2,13 +2,14 @@ package test
 
 import (
 	"github.com/oneliang/util-golang/logging"
+	loggingExt "github.com/oneliang/util-golang/logging_ext"
 	"testing"
 	"time"
 )
 
 func TestFileLogger(t *testing.T) {
-	fileLogger := logging.NewFileLogger(logging.Level.VERBOSE, "log", "default.log", &logging.FileLoggerConfig{
-		Rule:       logging.Rule.MINUTE,
+	fileLogger := loggingExt.NewFileLogger(logging.LevelConstants.VERBOSE, "log", "default.log", &loggingExt.FileLoggerConfig{
+		Rule:       loggingExt.Rule.MINUTE,
 		RemainDays: 1,
 	})
 	for i := 0; i < 10; i++ {

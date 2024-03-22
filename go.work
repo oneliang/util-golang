@@ -10,5 +10,6 @@ use (
 	concurrent
 	state
 	logging
+	logging_ext
 	yaml
 )
