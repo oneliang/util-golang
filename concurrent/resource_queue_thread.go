@@ -2,6 +2,7 @@ package concurrent
 
 import (
 	"github.com/oneliang/util-golang/constants"
+	"github.com/oneliang/util-golang/logging"
 )
 
 type ResourceQueueThread[T interface{}] struct {
