@@ -1,6 +1,6 @@
 module github.com/oneliang/util-golang/atomic
 
-go 1.21.1
+go 1.22.2
 
 replace (
 	"github.com/oneliang/util-golang/base" v0.0.0 => ../base

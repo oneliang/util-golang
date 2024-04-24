@@ -1,15 +1,16 @@
-go 1.21.1
+go 1.22.2
+
 use (
+	atomic
+	base
+	common
+	concurrent
 	constants
 	file
-	base
-	test
-	common
-	atomic
-	resource
-	concurrent
-	state
 	logging
 	logging_ext
+	resource
+	state
+	test
 	yaml
 )

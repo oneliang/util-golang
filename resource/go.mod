@@ -1,4 +1,4 @@
 module github.com/oneliang/util-golang/resource
 
-go 1.21.1
+go 1.22.2
 
