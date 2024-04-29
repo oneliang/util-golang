@@ -20,3 +20,4 @@
 
 .idea
 **/log/**/*.log
+test/mqtt_msg_test.go
