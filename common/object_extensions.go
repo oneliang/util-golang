@@ -16,6 +16,10 @@ func ObjectInList[V interface{}](object V, list []V) bool {
 	return false
 }
 
+func ObjectNotInList[V interface{}](object V, list []V) bool {
+	return !ObjectInList(object, list)
+}
+
 func JoinToString[V interface{}](list []V, transform func(index int, item V) string, separator string) string {
 	var results = ""
 	length := len(list)

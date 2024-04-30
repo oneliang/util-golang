@@ -13,6 +13,14 @@ func StringIsBlank(content string) bool {
 	return len(strings.TrimSpace(content)) == 0
 }
 
+func StringIsNotBlank(content string) bool {
+	return !StringIsBlank(content)
+}
+
 func StringIsEmpty(content string) bool {
 	return len(content) == 0
+}
+
+func StringIsNotEmpty(content string) bool {
+	return !StringIsEmpty(content)
 }
