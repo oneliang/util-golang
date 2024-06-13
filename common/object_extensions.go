@@ -7,7 +7,7 @@ import (
 	"reflect"
 )
 
-func ObjectInList[V interface{}](object V, list []V) bool {
+func ObjectInList[V any](object V, list []V) bool {
 	for _, item := range list {
 		if reflect.DeepEqual(object, item) {
 			return true
@@ -16,11 +16,11 @@ func ObjectInList[V interface{}](object V, list []V) bool {
 	return false
 }
 
-func ObjectNotInList[V interface{}](object V, list []V) bool {
+func ObjectNotInList[V any](object V, list []V) bool {
 	return !ObjectInList(object, list)
 }
 
-func JoinToString[V interface{}](list []V, transform func(index int, item V) string, separator string) string {
+func JoinToString[V any](list []V, transform func(index int, item V) string, separator string) string {
 	var results = ""
 	length := len(list)
 	for index, item := range list {
@@ -32,7 +32,7 @@ func JoinToString[V interface{}](list []V, transform func(index int, item V) str
 	return results
 }
 
-func CheckNotNil(object interface{}) error {
+func CheckNotNil(object any) error {
 	if object == nil {
 		return errors.New(fmt.Sprintf("object %+v is nil", object))
 	}

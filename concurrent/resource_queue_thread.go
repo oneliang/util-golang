@@ -5,7 +5,7 @@ import (
 	"github.com/oneliang/util-golang/logging"
 )
 
-type ResourceQueueThread[T interface{}] struct {
+type ResourceQueueThread[T any] struct {
 	loopThread        *LoopThread
 	needToStop        bool
 	resourceChannel   chan T
@@ -13,7 +13,7 @@ type ResourceQueueThread[T interface{}] struct {
 	logger            logging.Logger
 }
 
-func NewResourceQueueThread[T interface{}](resourceProcessor func(resource T)) *ResourceQueueThread[T] {
+func NewResourceQueueThread[T any](resourceProcessor func(resource T)) *ResourceQueueThread[T] {
 	resourceQueueThread := &ResourceQueueThread[T]{
 		needToStop:        false,
 		resourceChannel:   make(chan T),

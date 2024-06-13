@@ -8,18 +8,18 @@ import (
 
 // InvocationHandler .
 type InvocationHandler interface {
-	Invoke(proxy *Proxy, method *Method, args []interface{}) ([]interface{}, error)
+	Invoke(proxy *Proxy, method *Method, args []any) ([]any, error)
 }
 
 // Proxy .
 type Proxy struct {
-	instance          interface{}
+	instance          any
 	methods           map[string]*Method
 	invocationHandler InvocationHandler
 }
 
 // NewProxy .
-func NewProxy(instance interface{}, invocationHandler InvocationHandler) *Proxy {
+func NewProxy(instance any, invocationHandler InvocationHandler) *Proxy {
 	typ := reflect.TypeOf(instance)
 	value := reflect.ValueOf(instance)
 	methods := make(map[string]*Method)
@@ -36,7 +36,7 @@ func NewProxy(instance interface{}, invocationHandler InvocationHandler) *Proxy 
 }
 
 // InvokeMethod .
-func (this *Proxy) InvokeMethod(name string, args ...interface{}) ([]interface{}, error) {
+func (this *Proxy) InvokeMethod(name string, args ...any) ([]any, error) {
 	return this.invocationHandler.Invoke(this, this.methods[name], args)
 }
 
@@ -46,7 +46,7 @@ type Method struct {
 }
 
 // Invoke .
-func (this *Method) Invoke(args ...interface{}) (results []interface{}, err error) {
+func (this *Method) Invoke(args ...any) (results []any, err error) {
 	defer func() {
 		// throw exception
 		if p := recover(); p != nil {
@@ -66,7 +66,7 @@ func (this *Method) Invoke(args ...interface{}) (results []interface{}, err erro
 	callResults := this.value.Call(params)
 
 	// results
-	results = make([]interface{}, 0)
+	results = make([]any, 0)
 	if callResults != nil && len(callResults) > 0 {
 		for i := 0; i < len(callResults); i++ {
 			results = append(results, callResults[i].Interface())

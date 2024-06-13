@@ -1,18 +1,18 @@
 package base
 
-type Also[T interface{}] interface {
+type Also[T any] interface {
 	Also(func(*T)) *T
 }
 
-type Let[T interface{}, R interface{}] interface {
+type Let[T any, R any] interface {
 	Let(func(*T) *R) *R
 }
 
-func AlsoFunc[T interface{}](receiver *T, block func(*T)) *T {
+func AlsoFunc[T any](receiver *T, block func(*T)) *T {
 	block(receiver)
 	return receiver
 }
 
-func LetFunc[T interface{}, R interface{}](receive *T, block func(*T) *R) *R {
+func LetFunc[T any, R any](receive *T, block func(*T) *R) *R {
 	return block(receive)
 }

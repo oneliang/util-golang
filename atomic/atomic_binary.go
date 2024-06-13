@@ -23,7 +23,7 @@ func NewIndexWrapper(value uint) *IndexWrapper {
 	}
 }
 
-type AtomicBinary[DATA interface{}] struct {
+type AtomicBinary[DATA any] struct {
 	initializeSize uint
 	expandSize     uint
 	dataLength     uint
@@ -36,7 +36,7 @@ type AtomicBinary[DATA interface{}] struct {
 	autoExpandLock       *sync.Mutex
 }
 
-func NewAtomicBinaryDefault[DATA interface{}](
+func NewAtomicBinaryDefault[DATA any](
 	initializeSize uint,
 	dataLength uint,
 	byteArrayToData func(byteArray []byte) (data DATA),
@@ -45,7 +45,7 @@ func NewAtomicBinaryDefault[DATA interface{}](
 	return NewAtomicBinary[DATA](initializeSize, 10000, dataLength, byteArrayToData, dataToByteArray)
 }
 
-func NewAtomicBinary[DATA interface{}](
+func NewAtomicBinary[DATA any](
 	initializeSize uint,
 	expandSize uint,
 	dataLength uint,

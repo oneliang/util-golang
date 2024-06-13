@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-func LoadYamlToObject(path string, object interface{}) error {
+func LoadYamlToObject(path string, object any) error {
 	// 加载配置
 	result, err := os.ReadFile(path)
 	if err != nil {

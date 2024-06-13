@@ -2,7 +2,7 @@ package common
 
 import "github.com/oneliang/util-golang/base"
 
-func ListToMap[V interface{}, K comparable](list []V, keyTransform func(index int, item V) K) map[K]V {
+func ListToMap[V any, K comparable](list []V, keyTransform func(index int, item V) K) map[K]V {
 	resultMap := make(map[K]V)
 	for index, item := range list {
 		key := keyTransform(index, item)
@@ -11,7 +11,7 @@ func ListToMap[V interface{}, K comparable](list []V, keyTransform func(index in
 	return resultMap
 }
 
-func ListToNewMap[V interface{}, K comparable, NV interface{}](list []V, transform func(index int, item V) (K, NV)) map[K]NV {
+func ListToNewMap[V any, K comparable, NV any](list []V, transform func(index int, item V) (K, NV)) map[K]NV {
 	resultMap := make(map[K]NV)
 	for index, item := range list {
 		key, value := transform(index, item)
@@ -20,7 +20,7 @@ func ListToNewMap[V interface{}, K comparable, NV interface{}](list []V, transfo
 	return resultMap
 }
 
-func ListToNewList[V interface{}, NV interface{}](list []V, valueTransform func(index int, item V) NV) []NV {
+func ListToNewList[V any, NV any](list []V, valueTransform func(index int, item V) NV) []NV {
 	var newList []NV
 	for index, item := range list {
 		newItem := valueTransform(index, item)
@@ -29,7 +29,7 @@ func ListToNewList[V interface{}, NV interface{}](list []V, valueTransform func(
 	return newList
 }
 
-func ListFilter[V interface{}](list []V, filter func(index int, item V) bool) []V {
+func ListFilter[V any](list []V, filter func(index int, item V) bool) []V {
 	var newList []V
 	for index, item := range list {
 		if filter(index, item) {
@@ -39,7 +39,7 @@ func ListFilter[V interface{}](list []V, filter func(index int, item V) bool) []
 	return newList
 }
 
-func ListFilterToNewList[V interface{}, NV interface{}](list []V, filter func(index int, item V) bool, valueTransform func(index int, item V) NV) []NV {
+func ListFilterToNewList[V any, NV any](list []V, filter func(index int, item V) bool, valueTransform func(index int, item V) NV) []NV {
 	var newList []NV
 	for index, item := range list {
 		if filter(index, item) {
@@ -50,7 +50,7 @@ func ListFilterToNewList[V interface{}, NV interface{}](list []V, filter func(in
 	return newList
 }
 
-func ListMinOf[V interface{}, R base.NumberType](list []V, selector func(index int, item V) R) R {
+func ListMinOf[V any, R base.NumberType](list []V, selector func(index int, item V) R) R {
 	var minResult R
 	for index, item := range list {
 		value := selector(index, item)
@@ -65,7 +65,7 @@ func ListMinOf[V interface{}, R base.NumberType](list []V, selector func(index i
 	return minResult
 }
 
-func ListSumOf[V interface{}, R base.NumberType](list []V, selector func(index int, item V) R) R {
+func ListSumOf[V any, R base.NumberType](list []V, selector func(index int, item V) R) R {
 	var sumResult R = 0
 	for index, item := range list {
 		sumResult += selector(index, item)
@@ -73,7 +73,7 @@ func ListSumOf[V interface{}, R base.NumberType](list []V, selector func(index i
 	return sumResult
 }
 
-func ListGroupBy[V interface{}, K comparable](list []V, keySelector func(index int, item V) K) map[K][]V {
+func ListGroupBy[V any, K comparable](list []V, keySelector func(index int, item V) K) map[K][]V {
 	var groupByMap = make(map[K][]V)
 	for index, item := range list {
 		key := keySelector(index, item)

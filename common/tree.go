@@ -6,7 +6,7 @@ import (
 	"reflect"
 )
 
-func ListToTreeList[IdType comparable, Item interface{}](
+func ListToTreeList[IdType comparable, Item any](
 	dataList []Item,
 	idFieldName string,
 	parentIdFieldName string,
@@ -69,7 +69,7 @@ func ListToTreeList[IdType comparable, Item interface{}](
 	return rootDataList
 }
 
-func PrintTreeList[V interface{}](rootDataList []V) {
+func PrintTreeList[V any](rootDataList []V) {
 	jsonString, _ := json.Marshal(rootDataList)
 	fmt.Printf("json:%v\n", string(jsonString))
 }

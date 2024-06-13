@@ -11,23 +11,23 @@ import (
 	"time"
 )
 
-type ResourceSource[T interface{}] interface {
+type ResourceSource[T any] interface {
 	GetResource() *T
 
 	DestroyResource(resource *T) error
 }
 
-type resourceStatus[T interface{}] struct {
+type resourceStatus[T any] struct {
 	resource         *T
 	inUse            bool
 	lastNotInUseTime int64
 }
 
-type stableResourceStatus[T interface{}] struct {
+type stableResourceStatus[T any] struct {
 	resource         *T
 	lastNotInUseTime int64
 }
-type ResourcePool[T interface{}] struct {
+type ResourcePool[T any] struct {
 	Name                    string
 	minResourceSize         uint
 	maxResourceSize         uint
@@ -63,7 +63,7 @@ var (
 	}
 )
 
-func NewResourcePool[T interface{}](name string, resourceSource ResourceSource[T], resourcePoolConfig *ResourcePoolConfig) *ResourcePool[T] {
+func NewResourcePool[T any](name string, resourceSource ResourceSource[T], resourcePoolConfig *ResourcePoolConfig) *ResourcePool[T] {
 	var config = resourcePoolConfig
 	if config == nil {
 		config = defaultResourceConfig
