@@ -26,10 +26,11 @@ type LoopThread struct {
 
 func NewLoopThread(runnable Runnable) *LoopThread {
 	return &LoopThread{
-		runnable:    runnable,
-		state:       state_inactive,
-		stopChannel: make(chan bool, 1),
-		logger:      logging.LoggerManager.GetLoggerByPattern("LoopThread"),
+		operationLock: &sync.Mutex{},
+		runnable:      runnable,
+		state:         state_inactive,
+		stopChannel:   make(chan bool, 1),
+		logger:        logging.LoggerManager.GetLoggerByPattern("LoopThread"),
 	}
 }
 
