@@ -9,13 +9,14 @@ import (
 
 func TestResourceQueueThread(t *testing.T) {
 
-	resourceQueueThread := concurrent.NewResourceQueueThread[any](func(resource any) {
-		fmt.Println(fmt.Sprintf("%+v", resource))
-	})
+	resourceQueueThread := concurrent.NewResourceQueueThread[func()](func(resource func()) {
+		//fmt.Println(fmt.Sprintf("%+v", resource))
+		resource()
+	}, nil)
 	resourceQueueThread.Start()
-	resourceQueueThread.AddResource(1)
+	resourceQueueThread.AddResource(func() { fmt.Println(1) })
 	time.Sleep(2 * time.Second)
-	resourceQueueThread.AddResource(2)
+	resourceQueueThread.AddResource(func() { fmt.Println(2) })
 	resourceQueueThread.Stop()
 	time.Sleep(3 * time.Second)
 }

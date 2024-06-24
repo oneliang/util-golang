@@ -11,6 +11,7 @@ replace (
 	github.com/oneliang/util-golang/logging v0.0.0 => ./../logging
 	github.com/oneliang/util-golang/resource v0.0.0 => ./../resource
 	github.com/oneliang/util-golang/state v0.0.0 => ./../state
+	github.com/oneliang/util-golang/goroutine v0.0.0 => ./../goroutine
 )
 
 require (

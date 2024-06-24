@@ -10,15 +10,17 @@ type ResourceQueueThread[T any] struct {
 	needToStop        bool
 	resourceChannel   chan T
 	resourceProcessor func(resource T)
+	realStopCallback  func()
 	logger            logging.Logger
 }
 
-func NewResourceQueueThread[T any](resourceProcessor func(resource T)) *ResourceQueueThread[T] {
+func NewResourceQueueThread[T any](resourceProcessor func(resource T), realStopCallback func()) *ResourceQueueThread[T] {
 	resourceQueueThread := &ResourceQueueThread[T]{
 		needToStop:        false,
 		resourceChannel:   make(chan T),
 		resourceProcessor: resourceProcessor,
-		logger:            logging.LoggerManager.GetLoggerByPattern("ResourceQueueThread"),
+		realStopCallback:  realStopCallback,
+		logger:            logging.LoggerManager.GetLoggerByPattern("concurrent.ResourceQueueThread"),
 	}
 
 	resourceQueueThread.loopThread = NewLoopThread(func() {
@@ -55,6 +57,12 @@ func (this *ResourceQueueThread[T]) realStop() {
 	err := this.loopThread.Stop()
 	if err != nil {
 		return
+	} else {
+		this.needToStop = false
+		close(this.resourceChannel)
+		if this.realStopCallback != nil {
+			this.realStopCallback()
+		}
 	}
 }
 func (this *ResourceQueueThread[T]) AddResource(resource T) {

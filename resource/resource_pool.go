@@ -78,7 +78,7 @@ func NewResourcePool[T any](name string, resourceSource ResourceSource[T], resou
 		resourceSource:          resourceSource,
 		hasBeenInitialized:      false,
 		stableResourceStatusMap: make(map[int]*stableResourceStatus[T]),
-		logger:                  logging.LoggerManager.GetLoggerByPattern("ResourcePool"),
+		logger:                  logging.LoggerManager.GetLoggerByPattern("resource.ResourcePool"),
 	}
 }
 

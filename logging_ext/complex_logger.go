@@ -28,7 +28,7 @@ func NewComplexLogger(level *logging.Level, loggerList []*logging.AbstractLogger
 	}
 	complexLogger.logQueueThread = concurrent.NewResourceQueueThread[*logMessage](func(resource *logMessage) {
 		complexLogger.realLog(resource.levelName, resource.message, resource.err)
-	})
+	}, nil)
 	complexLogger.LogFunction = func(levelName string, message string, err error) {
 		complexLogger.log(levelName, message, err)
 	}

@@ -30,7 +30,7 @@ func NewLoopThread(runnable Runnable) *LoopThread {
 		runnable:      runnable,
 		state:         state_inactive,
 		stopChannel:   make(chan bool, 1),
-		logger:        logging.LoggerManager.GetLoggerByPattern("LoopThread"),
+		logger:        logging.LoggerManager.GetLoggerByPattern("concurrent.LoopThread"),
 	}
 }
 
