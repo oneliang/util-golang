@@ -103,7 +103,7 @@ func ListJoinToString[V any](list []V, transform func(index int, item V) string,
 func ListJoinToStringWithMaxCount[V any](list []V, transform func(index int, item V) string, maxCount int, separator string) string {
 	var results = ""
 	length := len(list)
-	if maxCount <= 0 {
+	if maxCount <= 0 || maxCount >= length {
 		maxCount = length
 	}
 	for index, item := range list {
