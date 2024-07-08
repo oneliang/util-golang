@@ -87,3 +87,33 @@ func ListGroupBy[V any, K comparable](list []V, keySelector func(index int, item
 	}
 	return groupByMap
 }
+
+func ListJoinToString[V any](list []V, transform func(index int, item V) string, separator string) string {
+	var results = ""
+	length := len(list)
+	for index, item := range list {
+		results += transform(index, item)
+		if index < length-1 {
+			results += separator
+		}
+	}
+	return results
+}
+
+func ListJoinToStringWithMaxCount[V any](list []V, transform func(index int, item V) string, maxCount int, separator string) string {
+	var results = ""
+	length := len(list)
+	if maxCount <= 0 {
+		maxCount = length
+	}
+	for index, item := range list {
+		if index >= maxCount {
+			break
+		}
+		results += transform(index, item)
+		if index < maxCount-1 {
+			results += separator
+		}
+	}
+	return results
+}
