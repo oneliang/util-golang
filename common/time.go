@@ -1,6 +1,7 @@
 package common
 
 import (
+	"errors"
 	"github.com/oneliang/util-golang/constants"
 	"time"
 )
@@ -75,4 +76,17 @@ func GetMinuteZeroTimePrevious(millisecond int64, offset int) int64 {
 
 func GetSecondZeroTimePrevious(millisecond int64, offset int) int64 {
 	return GetSecondZeroTime(millisecond) - int64(offset)*constants.TIME_MILLISECONDS_OF_MINUTE
+}
+
+func GetCurrentMonthDatesOffset(monthOffset int, monthCount int) (startTime, endTime time.Time, err error) {
+	if monthCount <= 0 {
+		return time.Time{}, time.Time{}, errors.New("parameter month count must be bigger than zero")
+	}
+	now := time.Now()
+	startOfMonth := now.AddDate(0, monthOffset, -now.Day()+1)
+	startDate := time.Date(startOfMonth.Year(), startOfMonth.Month(), startOfMonth.Day(), 0, 0, 0, 0, time.Local)
+	endOfMonth := now.AddDate(0, monthOffset+monthCount, -now.Day())
+	endDate := time.Date(endOfMonth.Year(), endOfMonth.Month(), endOfMonth.Day(), 23, 59, 59, 999999999, time.Local)
+
+	return startDate, endDate, nil
 }
