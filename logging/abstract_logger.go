@@ -53,7 +53,7 @@ func (this *AbstractLogger) logByLevel(level *Level, message string, err error, 
 
 // Log .
 func (this *AbstractLogger) log(levelName string, message string, err error, args ...any) {
-	logContent := GenerateLogContent(levelName, true, message, err, args)
+	logContent := GenerateLogContent(levelName, true, message, err, args...)
 	this.LogFunction(levelName, logContent, err)
 }
 
