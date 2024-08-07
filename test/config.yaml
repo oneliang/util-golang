@@ -1,0 +1,4 @@
+apkFile: "a.apk"
+apkMd5: "12345678901234567890123456789012"
+versionCode: 40
+versionName: "1.13_launcher"

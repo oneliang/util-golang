@@ -48,3 +48,18 @@ func CopyDataFromMap(instance any, dataMap map[string]any, ignoreNotExistField b
 	}
 	return nil
 }
+
+func ConvertType[T any](instance any, superInterface any) (error, T) {
+	superInterfaceType := reflect.TypeOf(superInterface)
+	if superInterfaceType.Kind() != reflect.Ptr || superInterfaceType.Elem().Kind() != reflect.Interface {
+		var nilValue T
+		return errors.New(fmt.Sprintf("Super interface is not interface type,  interface type:%v", superInterfaceType)), nilValue
+	}
+	instanceType := reflect.TypeOf(instance)
+	instanceInterface := superInterfaceType.Elem()
+	if !instanceType.Implements(instanceInterface) {
+		var nilValue T
+		return errors.New(fmt.Sprintf("Must implement interface, instance type:%v, interface type:%v", instanceType, superInterfaceType)), nilValue
+	}
+	return nil, instance.(T)
+}
