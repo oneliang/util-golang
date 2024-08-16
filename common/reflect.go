@@ -63,3 +63,16 @@ func ConvertType[T any](instance any, superInterface any) (error, T) {
 	}
 	return nil, instance.(T)
 }
+
+func SetPointerValueByReflect(instanceValue reflect.Value, value any) error {
+	if instanceValue.Kind() != reflect.Ptr {
+		return errors.New("only support pointer about instance value")
+	}
+
+	valueType := reflect.TypeOf(value)
+	if valueType.Kind() != reflect.Ptr {
+		return errors.New("only support pointer about value")
+	}
+	instanceValue.Set(reflect.ValueOf(value))
+	return nil
+}
