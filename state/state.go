@@ -56,3 +56,17 @@ func (this *State[K]) Next(key K) (*State[K], error) {
 		return nil, errors.New(fmt.Sprintf("next state[%v] not found", key))
 	}
 }
+
+func (this *State[K]) CheckPrevious(key K) bool {
+	if _, err := this.Previous(key); err != nil {
+		return false
+	}
+	return true
+}
+
+func (this *State[K]) CheckNext(key K) bool {
+	if _, err := this.Next(key); err != nil {
+		return false
+	}
+	return true
+}

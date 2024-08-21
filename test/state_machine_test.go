@@ -14,10 +14,10 @@ func TestStatusMachine(t *testing.T) {
 	secondState.AddNextState(thirdState)
 	stateMachine := state.NewStateMachine(firstState)
 	if err := stateMachine.NextState("tow"); err != nil {
-		fmt.Errorf("%v", err)
+		fmt.Println(fmt.Sprintf("%v", err))
 	}
 	if err := stateMachine.NextState("two"); err != nil {
-		fmt.Errorf("%v", err)
+		fmt.Println(fmt.Sprintf("%v", err))
 	}
 	fmt.Println(stateMachine.CurrentState.Key)
 }
