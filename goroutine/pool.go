@@ -7,19 +7,24 @@ import (
 	"github.com/oneliang/util-golang/logging"
 )
 
-type Task func() error
+type Task func(params ...any) error
+
+type taskWrapper struct {
+	task   *Task
+	params []any
+}
 type Pool struct {
-	resourceQueueThread *concurrent.ResourceQueueThread[Task]
-	taskQueue           chan Task
+	resourceQueueThread *concurrent.ResourceQueueThread[taskWrapper]
+	taskQueue           chan taskWrapper
 	logger              logging.Logger
 }
 
 func NewPool(goroutineSize int) *Pool {
 	pool := &Pool{
-		taskQueue: make(chan Task),
+		taskQueue: make(chan taskWrapper),
 		logger:    logging.LoggerManager.GetLoggerByPattern("goroutine.Pool"),
 	}
-	pool.resourceQueueThread = concurrent.NewResourceQueueThread[Task](func(resource Task) {
+	pool.resourceQueueThread = concurrent.NewResourceQueueThread[taskWrapper](func(resource taskWrapper) {
 		pool.logger.Info("pool.taskQueue <- resource:%+v", resource)
 		pool.taskQueue <- resource
 	}, func() {
@@ -31,14 +36,18 @@ func NewPool(goroutineSize int) *Pool {
 		go func() {
 			for {
 				select {
-				case task, ok := <-pool.taskQueue:
+				case taskItem, ok := <-pool.taskQueue:
 					if !ok {
 						continue
 					}
-					pool.logger.Info("go task hashcode:%+v", task)
-					err := task()
-					if err != nil {
-						pool.logger.Error(constants.STRING_ERROR, err)
+					pool.logger.Info("go task hashcode:%+v", taskItem)
+					if taskItem.task != nil {
+						err := (*taskItem.task)(taskItem.params...)
+						if err != nil {
+							pool.logger.Error(constants.STRING_ERROR, err)
+						}
+					} else {
+						pool.logger.Error("go task is nil", nil)
 					}
 				default:
 				}
@@ -49,8 +58,11 @@ func NewPool(goroutineSize int) *Pool {
 	return pool
 }
 
-func (this *Pool) AddTask(task Task) {
-	this.resourceQueueThread.AddResource(task)
+func (this *Pool) AddTask(task Task, params ...any) {
+	this.resourceQueueThread.AddResource(taskWrapper{
+		task:   &task,
+		params: params,
+	})
 }
 
 func (this *Pool) Start() {
