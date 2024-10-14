@@ -38,6 +38,6 @@ func TestPool(t *testing.T) {
 		return nil
 	}, 8, 9, 10)
 
-	time.Sleep(10000)
+	time.Sleep(100 * time.Second)
 	pool.Stop()
 }

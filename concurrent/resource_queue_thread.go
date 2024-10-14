@@ -3,6 +3,7 @@ package concurrent
 import (
 	"github.com/oneliang/util-golang/constants"
 	"github.com/oneliang/util-golang/logging"
+	"time"
 )
 
 type ResourceQueueThread[T any] struct {
@@ -38,11 +39,16 @@ func (this *ResourceQueueThread[T]) Start() {
 }
 func (this *ResourceQueueThread[T]) run() {
 	select {
-	case resource := <-this.resourceChannel:
-		this.resourceProcessor(resource)
+	case resource, ok := <-this.resourceChannel:
+		if ok {
+			this.resourceProcessor(resource)
+		}
 	default:
 		if this.needToStop {
 			this.realStop()
+		}
+		if len(this.resourceChannel) == 0 {
+			time.Sleep(5 * time.Millisecond)
 		}
 	}
 }

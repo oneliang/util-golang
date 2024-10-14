@@ -14,9 +14,12 @@ func TestResourceQueueThread(t *testing.T) {
 		resource()
 	}, nil)
 	resourceQueueThread.Start()
-	resourceQueueThread.AddResource(func() { fmt.Println(1) })
-	time.Sleep(2 * time.Second)
-	resourceQueueThread.AddResource(func() { fmt.Println(2) })
-	resourceQueueThread.Stop()
+	for i := 0; i < 100; i++ {
+		resourceQueueThread.AddResource(func() { fmt.Println(i) })
+	}
+	time.Sleep(100 * time.Second)
+	//resourceQueueThread.AddResource(func() { fmt.Println(2) })
 	time.Sleep(3 * time.Second)
+	resourceQueueThread.Stop()
+	//time.Sleep(4 * time.Second)
 }
