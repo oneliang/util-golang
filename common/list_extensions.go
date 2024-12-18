@@ -1,6 +1,9 @@
 package common
 
-import "github.com/oneliang/util-golang/base"
+import (
+	"github.com/oneliang/util-golang/base"
+	"strings"
+)
 
 func ListToMap[V any, K comparable](list []V, keyTransform func(index int, item V) K) map[K]V {
 	resultMap := make(map[K]V)
@@ -89,19 +92,19 @@ func ListGroupBy[V any, K comparable](list []V, keySelector func(index int, item
 }
 
 func ListJoinToString[V any](list []V, transform func(index int, item V) string, separator string) string {
-	var results = ""
+	var results strings.Builder
 	length := len(list)
 	for index, item := range list {
-		results += transform(index, item)
+		results.WriteString(transform(index, item))
 		if index < length-1 {
-			results += separator
+			results.WriteString(separator)
 		}
 	}
-	return results
+	return results.String()
 }
 
 func ListJoinToStringWithMaxCount[V any](list []V, transform func(index int, item V) string, maxCount int, separator string) string {
-	var results = ""
+	var results strings.Builder
 	length := len(list)
 	if maxCount <= 0 || maxCount >= length {
 		maxCount = length
@@ -110,10 +113,10 @@ func ListJoinToStringWithMaxCount[V any](list []V, transform func(index int, ite
 		if index >= maxCount {
 			break
 		}
-		results += transform(index, item)
+		results.WriteString(transform(index, item))
 		if index < maxCount-1 {
-			results += separator
+			results.WriteString(separator)
 		}
 	}
-	return results
+	return results.String()
 }
