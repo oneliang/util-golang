@@ -2,7 +2,7 @@ package common
 
 import "reflect"
 
-func MapToList[K comparable, V any, R any](inputMap map[K]V, transform func(K, V) R) []R {
+func MapToList[K comparable, V any, R any](inputMap map[K]V, transform func(key K, value V) R) []R {
 	var list []R
 	for key, value := range inputMap {
 		item := transform(key, value)
@@ -11,7 +11,7 @@ func MapToList[K comparable, V any, R any](inputMap map[K]V, transform func(K, V
 	return list
 }
 
-func MapToNewMap[K comparable, V any, NK comparable, NV any](inputMap map[K]V, transform func(K, V) (NK, NV)) map[NK]NV {
+func MapToNewMap[K comparable, V any, NK comparable, NV any](inputMap map[K]V, transform func(key K, value V) (NK, NV)) map[NK]NV {
 	var newMap = make(map[NK]NV)
 	for key, value := range inputMap {
 		newKey, newValue := transform(key, value)
