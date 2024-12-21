@@ -1,17 +1,16 @@
-package yaml
+package common
 
 import (
+	"encoding/xml"
 	"fmt"
-	yamlV3 "gopkg.in/yaml.v3"
 	"os"
 )
 
-func LoadYamlToObject(path string, object any) error {
-	// 加载配置
+func LoadXmlToObject(path string, object any) error {
 	data, err := os.ReadFile(path)
 	if err != nil {
 		fmt.Println(fmt.Sprintf("Failed to load file, path:%s", path))
 		return nil
 	}
-	return yamlV3.Unmarshal(data, object)
+	return xml.Unmarshal(data, object)
 }
