@@ -3,7 +3,12 @@ package common
 import "reflect"
 
 func MapToList[K comparable, V any, R any](inputMap map[K]V, transform func(key K, value V) R) []R {
-	var list []R
+	var list = make([]R, 0)
+
+	if inputMap == nil {
+		return list
+	}
+
 	for key, value := range inputMap {
 		item := transform(key, value)
 		list = append(list, item)
@@ -13,6 +18,11 @@ func MapToList[K comparable, V any, R any](inputMap map[K]V, transform func(key 
 
 func MapToNewMap[K comparable, V any, NK comparable, NV any](inputMap map[K]V, transform func(key K, value V) (NK, NV)) map[NK]NV {
 	var newMap = make(map[NK]NV)
+
+	if inputMap == nil || transform == nil {
+		return newMap
+	}
+
 	for key, value := range inputMap {
 		newKey, newValue := transform(key, value)
 		newMap[newKey] = newValue
@@ -33,7 +43,7 @@ func MapDiffers[K comparable, V any](inputMap map[K]V, otherMap map[K]V, valueCo
 		if !ok { //key not exists
 			list = append(list, key)
 		} else { //key exists
-			if !valueComparator(key, inputValue, otherValue) {
+			if valueComparator != nil && !valueComparator(key, inputValue, otherValue) {
 				list = append(list, key)
 			}
 		}
@@ -49,7 +59,7 @@ func MapDiffersAccurate[K comparable, V any](inputMap map[K]V, otherMap map[K]V,
 		if !ok { //key not exists
 			list = append(list, key)
 		} else { //key exists
-			if !valueComparator(key, inputValue, otherValue) {
+			if valueComparator != nil && !valueComparator(key, inputValue, otherValue) {
 				valueCompareKeyList = append(valueCompareKeyList, key)
 			}
 		}
