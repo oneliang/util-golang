@@ -47,7 +47,7 @@ func Merge(mergerConfig *MergerConfig) []*map[string]any {
 	dataList := make([]*map[string]any, len(masterDataList))
 
 	var slaveMapDataList []*slaveMapData = nil
-	if slaveDataList != nil {
+	if slaveDataList != nil && len(slaveDataList) > 0 {
 		slaveMapDataList = ListToNewList[*SlaveData, *slaveMapData](slaveDataList, func(index int, item *SlaveData) *slaveMapData {
 			mergeKeys := item.MergeKeys
 			mapData := ListToMap[*map[string]any, string](item.DataList, func(index int, innerItemPointer *map[string]any) string {
