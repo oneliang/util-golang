@@ -28,6 +28,14 @@ func generateKey(data map[string]any, mergeKeys []string) string {
 			value = constants.STRING_BLANK
 		}
 		switch value.(type) {
+		case int:
+			return strconv.FormatInt(int64(value.(int)), 10)
+		case int8:
+			return strconv.FormatInt(int64(value.(int8)), 10)
+		case int16:
+			return strconv.FormatInt(int64(value.(int16)), 10)
+		case int32:
+			return strconv.FormatInt(int64(value.(int32)), 10)
 		case int64:
 			return strconv.FormatInt(value.(int64), 10)
 		}
