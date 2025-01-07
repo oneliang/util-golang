@@ -8,7 +8,7 @@ import (
 type MergerConfig struct {
 	MasterDataList []*map[string]any
 	SlaveDataList  []*SlaveData
-	StaticData     *map[string]any //no merge key, merge data to every data map when output
+	StaticDataList []*map[string]any //no merge key, merge data to every data map when output
 }
 
 type SlaveData struct {
@@ -50,7 +50,7 @@ func Merge(mergerConfig *MergerConfig) []*map[string]any {
 
 	masterDataList := mergerConfig.MasterDataList
 	slaveDataList := mergerConfig.SlaveDataList
-	staticDataPointer := mergerConfig.StaticData
+	staticDataList := mergerConfig.StaticDataList
 
 	dataList := make([]*map[string]any, len(masterDataList))
 
@@ -84,10 +84,12 @@ func Merge(mergerConfig *MergerConfig) []*map[string]any {
 		dataList[i] = &masterData
 
 		//find static data map and append to master data
-		if staticDataPointer != nil {
-			staticData := *staticDataPointer
-			for staticDataKey, staticDataValue := range staticData {
-				masterData[staticDataKey] = staticDataValue
+		if staticDataList != nil {
+			for _, staticDataPointer := range staticDataList {
+				staticData := *staticDataPointer
+				for staticDataKey, staticDataValue := range staticData {
+					masterData[staticDataKey] = staticDataValue
+				}
 			}
 		}
 
