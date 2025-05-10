@@ -25,3 +25,15 @@ func NewTuple[F any, S any, T any](first F, second S, third T) *Tuple[F, S, T] {
 		Third:  third,
 	}
 }
+
+type KeyValue[K any, V any] struct {
+	Key   K
+	Value V
+}
+
+func NewKeyValue[K any, V any](key K, value V) *KeyValue[K, V] {
+	return &KeyValue[K, V]{
+		Key:   key,
+		Value: value,
+	}
+}
