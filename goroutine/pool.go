@@ -1,7 +1,6 @@
 package goroutine
 
 import (
-	"fmt"
 	"github.com/oneliang/util-golang/concurrent"
 	"github.com/oneliang/util-golang/constants"
 	"github.com/oneliang/util-golang/logging"
@@ -28,7 +27,7 @@ func NewPool(goroutineSize int) *Pool {
 		pool.logger.Info("pool.taskQueue <- resource:%+v", resource)
 		pool.taskQueue <- resource
 	}, func() {
-		fmt.Println("finished")
+		pool.logger.Info("finished")
 		close(pool.taskQueue)
 	})
 
