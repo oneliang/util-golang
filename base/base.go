@@ -16,3 +16,12 @@ func AlsoFunc[T any](receiver *T, block func(*T)) *T {
 func LetFunc[T any, R any](receive *T, block func(*T) *R) *R {
 	return block(receive)
 }
+
+func PanicRecover(fn func(params ...any) error, params ...any) error {
+	defer func() {
+		if r := recover(); r != nil {
+			return
+		}
+	}()
+	return fn(params)
+}

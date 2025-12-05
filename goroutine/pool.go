@@ -1,6 +1,7 @@
 package goroutine
 
 import (
+	"github.com/oneliang/util-golang/base"
 	"github.com/oneliang/util-golang/concurrent"
 	"github.com/oneliang/util-golang/constants"
 	"github.com/oneliang/util-golang/logging"
@@ -41,7 +42,7 @@ func NewPool(goroutineSize int) *Pool {
 					}
 					pool.logger.Info("go task hashcode:%+v", taskItem)
 					if taskItem.task != nil {
-						err := (*taskItem.task)(taskItem.params...)
+						err := base.PanicRecover(*taskItem.task, taskItem.params...)
 						if err != nil {
 							pool.logger.Error(constants.STRING_ERROR, err)
 						}

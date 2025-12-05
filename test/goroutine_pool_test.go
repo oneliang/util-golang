@@ -17,6 +17,7 @@ func TestPool(t *testing.T) {
 	pool.AddTask(func(params ...any) error {
 		log.Println(fmt.Sprintf("%v", params))
 		fmt.Println(fmt.Sprintf("goroutine id:%d, %d", common.GetGoroutineId(), 1))
+		panic("aa")
 		return nil
 	}, 1, 2, 3)
 
