@@ -66,3 +66,21 @@ func MapDiffersAccurate[K comparable, V any](inputMap map[K]V, otherMap map[K]V,
 	}
 	return list, valueCompareKeyList
 }
+
+// MapKeys .
+func MapKeys[K comparable, V any](inputMap map[K]V) []K {
+	var keys []K
+	for key, _ := range inputMap {
+		keys = append(keys, key)
+	}
+	return keys
+}
+
+// MapValues .
+func MapValues[K comparable, V any](inputMap map[K]V) []V {
+	var values []V
+	for _, value := range inputMap {
+		values = append(values, value)
+	}
+	return values
+}
