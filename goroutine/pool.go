@@ -19,7 +19,7 @@ type Pool struct {
 	logger              logging.Logger
 }
 
-func NewPool(goroutineSize int) *Pool {
+func NewPool(goroutineSize uint) *Pool {
 	pool := &Pool{
 		taskQueue: make(chan taskWrapper),
 		logger:    logging.LoggerManager.GetLoggerByPattern("goroutine.Pool"),
@@ -32,7 +32,7 @@ func NewPool(goroutineSize int) *Pool {
 		close(pool.taskQueue)
 	})
 
-	for i := 0; i < goroutineSize; i++ {
+	for i := 0; i < int(goroutineSize); i++ {
 		go func() {
 			for {
 				select {
