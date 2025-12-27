@@ -17,11 +17,12 @@ func LetFunc[T any, R any](receive *T, block func(*T) *R) *R {
 	return block(receive)
 }
 
-func PanicRecover(fn func(params ...any) error, params ...any) error {
+func ExecuteFunctionWithRecover(executeFunction func(params ...any) error, recoverCallback func(recover any), params ...any) error {
 	defer func() {
 		if r := recover(); r != nil {
+			recoverCallback(r)
 			return
 		}
 	}()
-	return fn(params)
+	return executeFunction(params)
 }

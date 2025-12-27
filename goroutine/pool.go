@@ -42,7 +42,9 @@ func NewPool(goroutineSize int) *Pool {
 					}
 					pool.logger.Info("go task hashcode:%+v", taskItem)
 					if taskItem.task != nil {
-						err := base.PanicRecover(*taskItem.task, taskItem.params...)
+						err := base.ExecuteFunctionWithRecover(*taskItem.task, func(recover any) {
+							pool.logger.Info("go task hashcode:%+v, recover:%v", taskItem, recover)
+						}, taskItem.params...)
 						if err != nil {
 							pool.logger.Error(constants.STRING_ERROR, err)
 						}
