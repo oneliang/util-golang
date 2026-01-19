@@ -34,24 +34,17 @@ func NewPool(goroutineSize uint) *Pool {
 
 	for i := 0; i < int(goroutineSize); i++ {
 		go func() {
-			for {
-				select {
-				case taskItem, ok := <-pool.taskQueue:
-					if !ok {
-						continue
+			for taskItem := range pool.taskQueue {
+				pool.logger.Info("go task hashcode:%+v", taskItem)
+				if taskItem.task != nil {
+					err := base.ExecuteFunctionWithRecover(*taskItem.task, func(recover any) {
+						pool.logger.Info("go task hashcode:%+v, recover:%v", taskItem, recover)
+					}, taskItem.params...)
+					if err != nil {
+						pool.logger.Error(constants.STRING_ERROR, err)
 					}
-					pool.logger.Info("go task hashcode:%+v", taskItem)
-					if taskItem.task != nil {
-						err := base.ExecuteFunctionWithRecover(*taskItem.task, func(recover any) {
-							pool.logger.Info("go task hashcode:%+v, recover:%v", taskItem, recover)
-						}, taskItem.params...)
-						if err != nil {
-							pool.logger.Error(constants.STRING_ERROR, err)
-						}
-					} else {
-						pool.logger.Error("go task is nil", nil)
-					}
-				default:
+				} else {
+					pool.logger.Error("go task is nil", nil)
 				}
 			}
 		}()
