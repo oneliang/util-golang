@@ -3,7 +3,23 @@ package file
 import (
 	"bufio"
 	"os"
+	"path/filepath"
 )
+
+func CreateFileWithDirectory(fullFilename string) error {
+	dir := filepath.Dir(fullFilename)
+	if err := os.MkdirAll(dir, 0755); err != nil {
+		return err
+	}
+
+	file, err := os.Create(fullFilename)
+	if err != nil {
+		return err
+	}
+	defer func() { _ = file.Close() }()
+
+	return nil
+}
 
 func ReadFileContentEachLine(filename string, readLineProcessor func(content string) bool) error {
 	file, err := os.Open(filename)
