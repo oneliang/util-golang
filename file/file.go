@@ -7,8 +7,8 @@ import (
 )
 
 func CreateFileWithDirectory(fullFilename string) error {
-	dir := filepath.Dir(fullFilename)
-	if err := os.MkdirAll(dir, 0755); err != nil {
+	directory := filepath.Dir(fullFilename)
+	if err := os.MkdirAll(directory, 0755); err != nil {
 		return err
 	}
 
@@ -18,6 +18,17 @@ func CreateFileWithDirectory(fullFilename string) error {
 	}
 	defer func() { _ = file.Close() }()
 
+	return nil
+}
+
+func WriteFileWithDirectory(fullFilename string, data []byte, permission os.FileMode) error {
+	directory := filepath.Dir(fullFilename)
+	if err := os.MkdirAll(directory, 0755); err != nil {
+		return err
+	}
+	if err := os.WriteFile(fullFilename, data, permission); err != nil {
+		return err
+	}
 	return nil
 }
 
